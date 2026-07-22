@@ -1,0 +1,15 @@
+.container {
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: sans-serif;
+}
+
+.ok {
+    background-color: #d4f8d4;
+    color: #1a5c1a;
+}
+
+.error {
+    background-color: #f8d4d4;
+    color: #5c1a1a;
+}
