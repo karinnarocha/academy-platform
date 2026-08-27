@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from database import create_db_and_tables
+from routers import health
+import models  # noqa: F401
 
 app = FastAPI()
 
@@ -11,6 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+app.include_router(health.router)
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
