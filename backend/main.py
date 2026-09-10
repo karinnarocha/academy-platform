@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import create_db_and_tables
-from routers import health
+from routers import health, students
 import models  # noqa: F401
 
 app = FastAPI()
@@ -15,6 +15,7 @@ app.add_middleware(
 )
 
 app.include_router(health.router)
+app.include_router(students.router)
 
 @app.on_event("startup")
 def on_startup():
