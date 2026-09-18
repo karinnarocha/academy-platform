@@ -1,0 +1,13 @@
+.list {
+    max-width: 500px;
+    margin: 1rem 0;
+}
+
+.item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.error {
+    color: red;
+}
