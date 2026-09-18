@@ -8,6 +8,7 @@ from waivers.router import router as waivers_router
 from waivers import waiver_model
 from membership.router import router as membership_router
 from membership import membership_model
+from trial_signup.router import router as trial_signup_router
 
 
 app = FastAPI()
@@ -24,6 +25,7 @@ app.include_router(health.router)
 app.include_router(students_router)
 app.include_router(waivers_router)
 app.include_router(membership_router)
+app.include_router(trial_signup_router)
 
 @app.on_event("startup")
 def on_startup():
