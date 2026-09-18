@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HealthCheck from "./components/HealthCheck/HealthCheck";
-import StudentsPage from "./pages/StudentsPage";
+import TrialSignupPage from "./pages/TrialSignupPage";
 import { checkHealth } from "./services/api";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
     <div>
       <h1>Martial Arts Academy Platform</h1>
       <HealthCheck status={status} />
-      <StudentsPage />
+      <TrialSignupPage />
     </div>
   );
 }
