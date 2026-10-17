@@ -15,5 +15,5 @@ class TrialSignupRequest(BaseModel):
     parent_phone: str
     date_of_birth: Optional[str] = None  # used only when signup_type == "self"
     children: list[ChildInput] = []       # used only when signup_type == "child"
-    signed_by: str
-    signature: str
+    signed_by: str  # typed full name = the signature
+    agreed: bool = False  # must be True to sign
