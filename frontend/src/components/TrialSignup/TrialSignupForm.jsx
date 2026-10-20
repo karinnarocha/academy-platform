@@ -12,14 +12,14 @@ export default function TrialSignupForm() {
     const [phone, setPhone] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState(""); // only used for "self"
     const [children, setChildren] = useState([{ ...emptyChild }]);
-    const [signature, setSignature] = useState("");
+    const [signedBy, setSignedBy] = useState("");
+    const [agreed, setAgreed] = useState(false);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
     function updateChild(index, field, value) {
-        const updated = [...children];
-        updated[index][field] = value;
-        setChildren(updated);
+        setChildren(children.map((child, i) => (i === index ? { ...child, [field]: value } : child)));
     }
 
     function addChild() {
@@ -30,9 +30,24 @@ export default function TrialSignupForm() {
         setChildren(children.filter((_, i) => i !== index));
     }
 
+    function resetForm() {
+        setSignupType("child");
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+        setDateOfBirth("");
+        setChildren([{ ...emptyChild }]);
+        setSignedBy("");
+        setAgreed(false);
+        setError(null);
+        setSuccess(false);
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
         setError(null);
+        setLoading(true);
 
         try {
             await createTrialSignup({
@@ -43,95 +58,121 @@ export default function TrialSignupForm() {
                 parent_phone: phone,
                 date_of_birth: signupType === "self" ? dateOfBirth : null,
                 children: signupType === "child" ? children : [],
-                signed_by: `${firstName} ${lastName}`,
-                signature: signature,
+                signed_by: signedBy,
+                agreed: agreed,
             });
             setSuccess(true);
-        } catch {
-            setError("Something went wrong submitting the form. Please try again.");
+        } catch (err) {
+            setError(err.message || "Something went wrong submitting the form. Please try again.");
+        } finally {
+            setLoading(false);
         }
     }
 
     if (success) {
-        return <p className={styles.success}>Thank you! You're all set for your trial class.</p>;
+        return (
+            <div className={styles.successCard}>
+                <p className={styles.successEmoji}>🥋</p>
+                <h2>You're all set!</h2>
+                <p>See you on the mat for your trial class.</p>
+                <button type="button" onClick={resetForm} className={styles.secondaryButton}>
+                    Sign up another person
+                </button>
+            </div>
+        );
     }
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
-            <h2>Trial Class Sign-Up</h2>
-            {error && <p className={styles.error}>{error}</p>}
+            <h2 className={styles.title}>Trial Class Sign-Up</h2>
 
-            <h3>Who is this trial for?</h3>
-            <div className={styles.radioGroup}>
-                <label className={styles.radioLabel}>
-                    <input
-                        type="radio"
-                        name="signupType"
-                        value="self"
-                        checked={signupType === "self"}
-                        onChange={() => setSignupType("self")}
-                    />
-                    Myself
-                </label>
-                <label className={styles.radioLabel}>
-                    <input
-                        type="radio"
-                        name="signupType"
-                        value="child"
-                        checked={signupType === "child"}
-                        onChange={() => setSignupType("child")}
-                    />
-                    My child(ren)
-                </label>
-            </div>
+            <section className={styles.section}>
+                <h3 className={styles.sectionTitle}>Who is this trial for?</h3>
+                <div className={styles.radioGroup}>
+                    <label className={signupType === "self" ? `${styles.option} ${styles.selected}` : styles.option}>
+                        <input
+                            type="radio"
+                            name="signupType"
+                            value="self"
+                            checked={signupType === "self"}
+                            onChange={() => setSignupType("self")}
+                        />
+                        Myself
+                    </label>
+                    <label className={signupType === "child" ? `${styles.option} ${styles.selected}` : styles.option}>
+                        <input
+                            type="radio"
+                            name="signupType"
+                            value="child"
+                            checked={signupType === "child"}
+                            onChange={() => setSignupType("child")}
+                        />
+                        My child(ren)
+                    </label>
+                </div>
+            </section>
 
-            <h3>Your Information</h3>
-            <input
-                type="text"
-                placeholder="First name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                placeholder="Last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <input
-                type="tel"
-                placeholder="Phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-            />
+            <section className={styles.section}>
+                <h3 className={styles.sectionTitle}>Your Information</h3>
+                <input
+                    type="text"
+                    placeholder="First name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Last name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <input
+                    type="tel"
+                    placeholder="Phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                />
 
-            {signupType === "self" && (
-                <>
-                    <h3>Your Date of Birth</h3>
-                    <input
-                        type="date"
-                        value={dateOfBirth}
-                        onChange={(e) => setDateOfBirth(e.target.value)}
-                        required
-                    />
-                </>
-            )}
+                {signupType === "self" && (
+                    <label className={styles.fieldLabel}>
+                        Date of birth
+                        <input
+                            type="date"
+                            value={dateOfBirth}
+                            onChange={(e) => setDateOfBirth(e.target.value)}
+                            required
+                        />
+                    </label>
+                )}
+            </section>
 
             {signupType === "child" && (
-                <>
-                    <h3>Child(ren) Trying Out</h3>
+                <section className={styles.section}>
+                    <h3 className={styles.sectionTitle}>Child(ren) Trying Out</h3>
                     {children.map((child, index) => (
                         <div key={index} className={styles.childRow}>
+                            <div className={styles.childHeader}>
+                                <span>Child {index + 1}</span>
+                                {children.length > 1 && (
+                                    <button
+                                        type="button"
+                                        onClick={() => removeChild(index)}
+                                        className={styles.removeButton}
+                                    >
+                                        Remove
+                                    </button>
+                                )}
+                            </div>
                             <input
                                 type="text"
                                 placeholder="Child first name"
@@ -146,46 +187,56 @@ export default function TrialSignupForm() {
                                 onChange={(e) => updateChild(index, "last_name", e.target.value)}
                                 required
                             />
-                            <input
-                                type="date"
-                                value={child.date_of_birth}
-                                onChange={(e) => updateChild(index, "date_of_birth", e.target.value)}
-                                required
-                            />
-                            {children.length > 1 && (
-                                <button
-                                    type="button"
-                                    onClick={() => removeChild(index)}
-                                    className={styles.removeButton}
-                                >
-                                    Remove
-                                </button>
-                            )}
+                            <label className={styles.fieldLabel}>
+                                Date of birth
+                                <input
+                                    type="date"
+                                    value={child.date_of_birth}
+                                    onChange={(e) => updateChild(index, "date_of_birth", e.target.value)}
+                                    required
+                                />
+                            </label>
                         </div>
                     ))}
                     <button type="button" onClick={addChild} className={styles.addButton}>
                         + Add another child
                     </button>
-                </>
+                </section>
             )}
 
-            <h3>Liability Waiver</h3>
-            <p className={styles.legalText}>
-                In consideration for my attendance and participation (or my child's/children's participation)
-                in this academy's martial arts training, I acknowledge the risks of martial arts training and
-                agree to release the academy, its staff, and instructors from liability for any injury or loss.
-                I authorize photo release for social media or advertising. If signing on behalf of a minor, I
-                confirm I am their parent or legal guardian and am 18 years of age or older.
-            </p>
-            <input
-                type="text"
-                placeholder="Full name (as signature)"
-                value={signature}
-                onChange={(e) => setSignature(e.target.value)}
-                required
-            />
+            <section className={styles.section}>
+                <h3 className={styles.sectionTitle}>Liability Waiver</h3>
+                <p className={styles.legalText}>
+                    In consideration for my attendance and participation (or my child's/children's participation)
+                    in this academy's martial arts training, I acknowledge the risks of martial arts training and
+                    agree to release the academy, its staff, and instructors from liability for any injury or loss.
+                    I authorize photo release for social media or advertising. If signing on behalf of a minor, I
+                    confirm I am their parent or legal guardian and am 18 years of age or older.
+                </p>
 
-            <button type="submit">Submit & Sign Waiver</button>
+                <label className={styles.checkLabel}>
+                    <input
+                        type="checkbox"
+                        checked={agreed}
+                        onChange={(e) => setAgreed(e.target.checked)}
+                    />
+                    I have read and agree to the waiver, also agree that I sign this on behalf of my child(ren) if applicable. and i authorize my photo to be used for social media or advertising purposes.
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Type your full name to sign"
+                    value={signedBy}
+                    onChange={(e) => setSignedBy(e.target.value)}
+                    required
+                />
+            </section>
+
+            {error && <p className={styles.error}>{error}</p>}
+
+            <button type="submit" className={styles.submitButton} disabled={!agreed || loading}>
+                {loading ? "Sending..." : "Submit & Sign Waiver"}
+            </button>
         </form>
     );
 }

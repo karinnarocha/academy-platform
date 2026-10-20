@@ -1,68 +1,185 @@
 .form {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px 16px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    max-width: 400px;
-    margin: 1rem auto;
-    padding: 1rem;
+    gap: 16px;
 }
 
-.form input,
-.form button {
-    padding: 0.75rem;
+.title {
+    text-align: center;
+    margin: 0;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.sectionTitle {
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+    color: #111827;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="tel"],
+.form input[type="date"] {
+    width: 100%;
+    padding: 12px;
     font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form input:focus {
+    outline: 2px solid #111827;
+    border-color: transparent;
 }
 
 .radioGroup {
     display: flex;
-    gap: 1.5rem;
-    margin-bottom: 0.5rem;
+    gap: 10px;
 }
 
-.radioLabel {
+.option {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 1rem;
+    gap: 8px;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
     cursor: pointer;
+}
+
+.selected {
+    border: 2px solid #111827;
+    background: #f3f4f6;
+}
+
+.fieldLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+    color: #374151;
 }
 
 .childRow {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    border: 1px solid #ddd;
-    padding: 0.75rem;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
 }
 
-.addButton {
-    background: #eee;
-    border: 1px dashed #999;
+.childHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .removeButton {
-    background: #fdd;
-    border: 1px solid #c33;
-    align-self: flex-start;
+    background: none;
+    border: none;
+    color: #b91c1c;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.addButton {
+    padding: 12px;
+    font-size: 1rem;
+    background: #f9fafb;
+    border: 1px dashed #9ca3af;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .legalText {
-    font-size: 0.85rem;
-    color: #555;
-    background: #f7f7f7;
-    padding: 0.75rem;
-    border-radius: 4px;
+    margin: 0;
+    padding: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #374151;
+    background: #f3f4f6;
+    border-radius: 8px;
+}
+
+.checkLabel {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.checkLabel input {
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
 }
 
 .error {
-    color: red;
+    margin: 0;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #b91c1c;
+    background: #fef2f2;
+    border-radius: 8px;
 }
 
-.success {
+.submitButton {
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #111827;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submitButton:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.successCard {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 32px 24px;
     text-align: center;
-    font-size: 1.2rem;
-    padding: 2rem;
-    color: green;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.successEmoji {
+    display: block;
+    margin: 0 0 12px;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.secondaryButton {
+    margin-top: 16px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
 }
