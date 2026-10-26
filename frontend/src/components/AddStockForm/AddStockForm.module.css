@@ -1,0 +1,87 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #111827;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 520px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+.form select,
+.form input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form select:focus,
+.form input:focus {
+    outline: 2px solid #111827;
+    border-color: transparent;
+}
+
+.error {
+    margin: 0;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #b91c1c;
+    background: #fef2f2;
+    border-radius: 8px;
+}
+
+.message {
+    margin: 0;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #166534;
+    background: #f0fdf4;
+    border-radius: 8px;
+}
+
+.submitButton {
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #111827;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submitButton:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}

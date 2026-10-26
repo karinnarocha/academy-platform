@@ -1,0 +1,107 @@
+.card {
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.title {
+    margin: 0 0 12px;
+    font-size: 1.15rem;
+    color: #111827;
+}
+
+.empty {
+    margin: 0;
+    color: #6b7280;
+}
+
+.error {
+    margin: 0 0 12px;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #b91c1c;
+    background: #fef2f2;
+    border-radius: 8px;
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.name {
+    font-weight: 600;
+    color: #111827;
+}
+
+.meta {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.qty {
+    min-width: 48px;
+    text-align: right;
+    font-weight: 600;
+    color: #111827;
+}
+
+.low {
+    color: #b45309;
+}
+
+.out {
+    color: #b91c1c;
+}
+
+.sellButton {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background: #111827;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.sellButton:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+.deleteButton {
+    padding: 8px;
+    font-size: 0.9rem;
+    color: #9ca3af;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    color: #b91c1c;
+}

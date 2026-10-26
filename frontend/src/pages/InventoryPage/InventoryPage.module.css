@@ -1,0 +1,14 @@
+.page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.heading {
+    margin: 0;
+    font-size: 1.6rem;
+    text-align: left;
+}
